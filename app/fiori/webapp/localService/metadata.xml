@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="MyService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Employ" EntityType="MyService.Employ">
+                    <NavigationPropertyBinding Path="TravelStatus" Target="TravelStatus"/>
+                    <NavigationPropertyBinding Path="Mode" Target="Mode"/>
+                    <NavigationPropertyBinding Path="Billable" Target="Billable"/>
+                    <NavigationPropertyBinding Path="Type" Target="Type"/>
+                    <NavigationPropertyBinding Path="Accomodation" Target="Accomodation"/>
+                    <NavigationPropertyBinding Path="RoundTrip" Target="RoundTrip"/>
+                </EntitySet>
+                <EntitySet Name="TravelStatus" EntityType="MyService.TravelStatus">
+                    <NavigationPropertyBinding Path="texts" Target="TravelStatus_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="TravelStatus_texts"/>
+                </EntitySet>
+                <EntitySet Name="Mode" EntityType="MyService.Mode">
+                    <NavigationPropertyBinding Path="texts" Target="Mode_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Mode_texts"/>
+                </EntitySet>
+                <EntitySet Name="Billable" EntityType="MyService.Billable">
+                    <NavigationPropertyBinding Path="texts" Target="Billable_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Billable_texts"/>
+                </EntitySet>
+                <EntitySet Name="Type" EntityType="MyService.Type">
+                    <NavigationPropertyBinding Path="texts" Target="Type_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Type_texts"/>
+                </EntitySet>
+                <EntitySet Name="Accomodation" EntityType="MyService.Accomodation">
+                    <NavigationPropertyBinding Path="texts" Target="Accomodation_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Accomodation_texts"/>
+                </EntitySet>
+                <EntitySet Name="RoundTrip" EntityType="MyService.RoundTrip">
+                    <NavigationPropertyBinding Path="texts" Target="RoundTrip_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="RoundTrip_texts"/>
+                </EntitySet>
+                <EntitySet Name="TravelStatus_texts" EntityType="MyService.TravelStatus_texts"/>
+                <EntitySet Name="Mode_texts" EntityType="MyService.Mode_texts"/>
+                <EntitySet Name="Billable_texts" EntityType="MyService.Billable_texts"/>
+                <EntitySet Name="Type_texts" EntityType="MyService.Type_texts"/>
+                <EntitySet Name="Accomodation_texts" EntityType="MyService.Accomodation_texts"/>
+                <EntitySet Name="RoundTrip_texts" EntityType="MyService.RoundTrip_texts"/>
+            </EntityContainer>
+            <EntityType Name="Employ">
+                <Key>
+                    <PropertyRef Name="EmployId"/>
+                </Key>
+                <Property Name="EmployId" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="NameOfPassenger" Type="Edm.String" MaxLength="30"/>
+                <NavigationProperty Name="TravelStatus" Type="MyService.TravelStatus">
+                    <ReferentialConstraint Property="TravelStatus_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="TravelStatus_code" Type="Edm.String" DefaultValue="O"/>
+                <Property Name="Origin" Type="Edm.String" MaxLength="30"/>
+                <Property Name="Destination" Type="Edm.String" MaxLength="30"/>
+                <Property Name="DateOfDeparture" Type="Edm.Date"/>
+                <Property Name="DateOfArrival" Type="Edm.Date"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="Mode" Type="MyService.Mode">
+                    <ReferentialConstraint Property="Mode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="Mode_code" Type="Edm.String"/>
+                <NavigationProperty Name="Billable" Type="MyService.Billable">
+                    <ReferentialConstraint Property="Billable_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="Billable_code" Type="Edm.String"/>
+                <NavigationProperty Name="Type" Type="MyService.Type">
+                    <ReferentialConstraint Property="Type_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="Type_code" Type="Edm.String"/>
+                <NavigationProperty Name="Accomodation" Type="MyService.Accomodation">
+                    <ReferentialConstraint Property="Accomodation_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="Accomodation_code" Type="Edm.String"/>
+                <NavigationProperty Name="RoundTrip" Type="MyService.RoundTrip">
+                    <ReferentialConstraint Property="RoundTrip_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="RoundTrip_code" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="TravelStatus">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" DefaultValue="O"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.TravelStatus_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.TravelStatus_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Mode">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.Mode_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.Mode_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Billable">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.Billable_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.Billable_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Type">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.Type_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.Type_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Accomodation">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.Accomodation_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.Accomodation_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="RoundTrip">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(MyService.RoundTrip_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="MyService.RoundTrip_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="TravelStatus_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" DefaultValue="O"/>
+            </EntityType>
+            <EntityType Name="Mode_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Billable_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Type_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Accomodation_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="RoundTrip_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <Annotations Target="MyService.Employ/TravelStatus_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="TravelStatus"/>
+                        <PropertyValue Property="CollectionPath" String="TravelStatus"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="TravelStatus_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.Employ/Mode_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Mode"/>
+                        <PropertyValue Property="CollectionPath" String="Mode"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Mode_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.Employ/Billable_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Billable"/>
+                        <PropertyValue Property="CollectionPath" String="Billable"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Billable_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.Employ/Type_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Type"/>
+                        <PropertyValue Property="CollectionPath" String="Type"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Type_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.Employ/Accomodation_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Accomodation"/>
+                        <PropertyValue Property="CollectionPath" String="Accomodation"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Accomodation_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.Employ/RoundTrip_code">
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="RoundTrip"/>
+                        <PropertyValue Property="CollectionPath" String="RoundTrip"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="RoundTrip_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="MyService.TravelStatus">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="MyService.TravelStatus/name">
+                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                </Annotations>
+                <Annotations Target="MyService.TravelStatus/descr">
+                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                    </Annotations>
+                    <Annotations Target="MyService.TravelStatus/code">
+                        <Annotation Term="Validation.AllowedValues">
+                            <Collection>
+                                <Record Type="Validation.AllowedValue">
+                                    <Annotation Term="Core.SymbolicName" String="Open"/>
+                                    <PropertyValue Property="Value" String="O"/>
+                                </Record>
+                                <Record Type="Validation.AllowedValue">
+                                    <Annotation Term="Core.SymbolicName" String="Accepted"/>
+                                    <PropertyValue Property="Value" String="A"/>
+                                </Record>
+                                <Record Type="Validation.AllowedValue">
+                                    <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                    <PropertyValue Property="Value" String="C"/>
+                                </Record>
+                            </Collection>
+                        </Annotation>
+                    </Annotations>
+                    <Annotations Target="MyService.Mode">
+                        <Annotation Term="UI.Identification">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="name"/>
+                                </Record>
+                            </Collection>
+                        </Annotation>
+                    </Annotations>
+                    <Annotations Target="MyService.Mode/name">
+                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                        </Annotations>
+                        <Annotations Target="MyService.Mode/descr">
+                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                            </Annotations>
+                            <Annotations Target="MyService.Mode/code">
+                                <Annotation Term="Validation.AllowedValues">
+                                    <Collection>
+                                        <Record Type="Validation.AllowedValue">
+                                            <Annotation Term="Core.SymbolicName" String="Flight"/>
+                                            <PropertyValue Property="Value" String="F"/>
+                                        </Record>
+                                        <Record Type="Validation.AllowedValue">
+                                            <Annotation Term="Core.SymbolicName" String="Train"/>
+                                            <PropertyValue Property="Value" String="T"/>
+                                        </Record>
+                                        <Record Type="Validation.AllowedValue">
+                                            <Annotation Term="Core.SymbolicName" String="Car"/>
+                                            <PropertyValue Property="Value" String="C"/>
+                                        </Record>
+                                        <Record Type="Validation.AllowedValue">
+                                            <Annotation Term="Core.SymbolicName" String="Other"/>
+                                            <PropertyValue Property="Value" String="O"/>
+                                        </Record>
+                                    </Collection>
+                                </Annotation>
+                            </Annotations>
+                            <Annotations Target="MyService.Billable">
+                                <Annotation Term="UI.Identification">
+                                    <Collection>
+                                        <Record Type="UI.DataField">
+                                            <PropertyValue Property="Value" Path="name"/>
+                                        </Record>
+                                    </Collection>
+                                </Annotation>
+                            </Annotations>
+                            <Annotations Target="MyService.Billable/name">
+                                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                </Annotations>
+                                <Annotations Target="MyService.Billable/descr">
+                                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                    </Annotations>
+                                    <Annotations Target="MyService.Billable/code">
+                                        <Annotation Term="Validation.AllowedValues">
+                                            <Collection>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="Yes"/>
+                                                    <PropertyValue Property="Value" String="Y"/>
+                                                </Record>
+                                                <Record Type="Validation.AllowedValue">
+                                                    <Annotation Term="Core.SymbolicName" String="No"/>
+                                                    <PropertyValue Property="Value" String="N"/>
+                                                </Record>
+                                            </Collection>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="MyService.Type">
+                                        <Annotation Term="UI.Identification">
+                                            <Collection>
+                                                <Record Type="UI.DataField">
+                                                    <PropertyValue Property="Value" Path="name"/>
+                                                </Record>
+                                            </Collection>
+                                        </Annotation>
+                                    </Annotations>
+                                    <Annotations Target="MyService.Type/name">
+                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                        </Annotations>
+                                        <Annotations Target="MyService.Type/descr">
+                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                            </Annotations>
+                                            <Annotations Target="MyService.Type/code">
+                                                <Annotation Term="Validation.AllowedValues">
+                                                    <Collection>
+                                                        <Record Type="Validation.AllowedValue">
+                                                            <Annotation Term="Core.SymbolicName" String="National"/>
+                                                            <PropertyValue Property="Value" String="N"/>
+                                                        </Record>
+                                                        <Record Type="Validation.AllowedValue">
+                                                            <Annotation Term="Core.SymbolicName" String="International"/>
+                                                            <PropertyValue Property="Value" String="I"/>
+                                                        </Record>
+                                                    </Collection>
+                                                </Annotation>
+                                            </Annotations>
+                                            <Annotations Target="MyService.Accomodation">
+                                                <Annotation Term="UI.Identification">
+                                                    <Collection>
+                                                        <Record Type="UI.DataField">
+                                                            <PropertyValue Property="Value" Path="name"/>
+                                                        </Record>
+                                                    </Collection>
+                                                </Annotation>
+                                            </Annotations>
+                                            <Annotations Target="MyService.Accomodation/name">
+                                                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                </Annotations>
+                                                <Annotations Target="MyService.Accomodation/descr">
+                                                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MyService.Accomodation/code">
+                                                        <Annotation Term="Validation.AllowedValues">
+                                                            <Collection>
+                                                                <Record Type="Validation.AllowedValue">
+                                                                    <Annotation Term="Core.SymbolicName" String="Yes"/>
+                                                                    <PropertyValue Property="Value" String="Y"/>
+                                                                </Record>
+                                                                <Record Type="Validation.AllowedValue">
+                                                                    <Annotation Term="Core.SymbolicName" String="No"/>
+                                                                    <PropertyValue Property="Value" String="N"/>
+                                                                </Record>
+                                                            </Collection>
+                                                        </Annotation>
+                                                    </Annotations>
+                                                    <Annotations Target="MyService.RoundTrip">
+                                                        <Annotation Term="UI.Identification">
+                                                            <Collection>
+                                                                <Record Type="UI.DataField">
+                                                                    <PropertyValue Property="Value" Path="name"/>
+                                                                </Record>
+                                                            </Collection>
+                                                        </Annotation>
+                                                    </Annotations>
+                                                    <Annotations Target="MyService.RoundTrip/name">
+                                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                        </Annotations>
+                                                        <Annotations Target="MyService.RoundTrip/descr">
+                                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MyService.RoundTrip/code">
+                                                                <Annotation Term="Validation.AllowedValues">
+                                                                    <Collection>
+                                                                        <Record Type="Validation.AllowedValue">
+                                                                            <Annotation Term="Core.SymbolicName" String="Oneway"/>
+                                                                            <PropertyValue Property="Value" String="One Way"/>
+                                                                        </Record>
+                                                                        <Record Type="Validation.AllowedValue">
+                                                                            <Annotation Term="Core.SymbolicName" String="Twoway"/>
+                                                                            <PropertyValue Property="Value" String="Two Way"/>
+                                                                        </Record>
+                                                                    </Collection>
+                                                                </Annotation>
+                                                            </Annotations>
+                                                            <Annotations Target="MyService.TravelStatus_texts/locale">
+                                                                <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="MyService.TravelStatus_texts/name">
+                                                                    <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                    </Annotations>
+                                                                    <Annotations Target="MyService.TravelStatus_texts/descr">
+                                                                        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="MyService.TravelStatus_texts/code">
+                                                                            <Annotation Term="Validation.AllowedValues">
+                                                                                <Collection>
+                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                        <Annotation Term="Core.SymbolicName" String="Open"/>
+                                                                                        <PropertyValue Property="Value" String="O"/>
+                                                                                    </Record>
+                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                        <Annotation Term="Core.SymbolicName" String="Accepted"/>
+                                                                                        <PropertyValue Property="Value" String="A"/>
+                                                                                    </Record>
+                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                        <Annotation Term="Core.SymbolicName" String="Canceled"/>
+                                                                                        <PropertyValue Property="Value" String="C"/>
+                                                                                    </Record>
+                                                                                </Collection>
+                                                                            </Annotation>
+                                                                        </Annotations>
+                                                                        <Annotations Target="MyService.Mode_texts/locale">
+                                                                            <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="MyService.Mode_texts/name">
+                                                                                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                </Annotations>
+                                                                                <Annotations Target="MyService.Mode_texts/descr">
+                                                                                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MyService.Mode_texts/code">
+                                                                                        <Annotation Term="Validation.AllowedValues">
+                                                                                            <Collection>
+                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                    <Annotation Term="Core.SymbolicName" String="Flight"/>
+                                                                                                    <PropertyValue Property="Value" String="F"/>
+                                                                                                </Record>
+                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                    <Annotation Term="Core.SymbolicName" String="Train"/>
+                                                                                                    <PropertyValue Property="Value" String="T"/>
+                                                                                                </Record>
+                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                    <Annotation Term="Core.SymbolicName" String="Car"/>
+                                                                                                    <PropertyValue Property="Value" String="C"/>
+                                                                                                </Record>
+                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                    <Annotation Term="Core.SymbolicName" String="Other"/>
+                                                                                                    <PropertyValue Property="Value" String="O"/>
+                                                                                                </Record>
+                                                                                            </Collection>
+                                                                                        </Annotation>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MyService.Billable_texts/locale">
+                                                                                        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                        </Annotations>
+                                                                                        <Annotations Target="MyService.Billable_texts/name">
+                                                                                            <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                            </Annotations>
+                                                                                            <Annotations Target="MyService.Billable_texts/descr">
+                                                                                                <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="MyService.Billable_texts/code">
+                                                                                                    <Annotation Term="Validation.AllowedValues">
+                                                                                                        <Collection>
+                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                <Annotation Term="Core.SymbolicName" String="Yes"/>
+                                                                                                                <PropertyValue Property="Value" String="Y"/>
+                                                                                                            </Record>
+                                                                                                            <Record Type="Validation.AllowedValue">
+                                                                                                                <Annotation Term="Core.SymbolicName" String="No"/>
+                                                                                                                <PropertyValue Property="Value" String="N"/>
+                                                                                                            </Record>
+                                                                                                        </Collection>
+                                                                                                    </Annotation>
+                                                                                                </Annotations>
+                                                                                                <Annotations Target="MyService.Type_texts/locale">
+                                                                                                    <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                    </Annotations>
+                                                                                                    <Annotations Target="MyService.Type_texts/name">
+                                                                                                        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                        </Annotations>
+                                                                                                        <Annotations Target="MyService.Type_texts/descr">
+                                                                                                            <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="MyService.Type_texts/code">
+                                                                                                                <Annotation Term="Validation.AllowedValues">
+                                                                                                                    <Collection>
+                                                                                                                        <Record Type="Validation.AllowedValue">
+                                                                                                                            <Annotation Term="Core.SymbolicName" String="National"/>
+                                                                                                                            <PropertyValue Property="Value" String="N"/>
+                                                                                                                        </Record>
+                                                                                                                        <Record Type="Validation.AllowedValue">
+                                                                                                                            <Annotation Term="Core.SymbolicName" String="International"/>
+                                                                                                                            <PropertyValue Property="Value" String="I"/>
+                                                                                                                        </Record>
+                                                                                                                    </Collection>
+                                                                                                                </Annotation>
+                                                                                                            </Annotations>
+                                                                                                            <Annotations Target="MyService.Accomodation_texts/locale">
+                                                                                                                <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                                </Annotations>
+                                                                                                                <Annotations Target="MyService.Accomodation_texts/name">
+                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                                    </Annotations>
+                                                                                                                    <Annotations Target="MyService.Accomodation_texts/descr">
+                                                                                                                        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="MyService.Accomodation_texts/code">
+                                                                                                                            <Annotation Term="Validation.AllowedValues">
+                                                                                                                                <Collection>
+                                                                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                                                                        <Annotation Term="Core.SymbolicName" String="Yes"/>
+                                                                                                                                        <PropertyValue Property="Value" String="Y"/>
+                                                                                                                                    </Record>
+                                                                                                                                    <Record Type="Validation.AllowedValue">
+                                                                                                                                        <Annotation Term="Core.SymbolicName" String="No"/>
+                                                                                                                                        <PropertyValue Property="Value" String="N"/>
+                                                                                                                                    </Record>
+                                                                                                                                </Collection>
+                                                                                                                            </Annotation>
+                                                                                                                        </Annotations>
+                                                                                                                        <Annotations Target="MyService.RoundTrip_texts/locale">
+                                                                                                                            <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                                                                                                            </Annotations>
+                                                                                                                            <Annotations Target="MyService.RoundTrip_texts/name">
+                                                                                                                                <Annotation Term="Common.Label" String="{i18n>Name}"/>
+                                                                                                                                </Annotations>
+                                                                                                                                <Annotations Target="MyService.RoundTrip_texts/descr">
+                                                                                                                                    <Annotation Term="Common.Label" String="{i18n>Description}"/>
+                                                                                                                                    </Annotations>
+                                                                                                                                    <Annotations Target="MyService.RoundTrip_texts/code">
+                                                                                                                                        <Annotation Term="Validation.AllowedValues">
+                                                                                                                                            <Collection>
+                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="Oneway"/>
+                                                                                                                                                    <PropertyValue Property="Value" String="One Way"/>
+                                                                                                                                                </Record>
+                                                                                                                                                <Record Type="Validation.AllowedValue">
+                                                                                                                                                    <Annotation Term="Core.SymbolicName" String="Twoway"/>
+                                                                                                                                                    <PropertyValue Property="Value" String="Two Way"/>
+                                                                                                                                                </Record>
+                                                                                                                                            </Collection>
+                                                                                                                                        </Annotation>
+                                                                                                                                    </Annotations>
+                                                                                                                                </Schema>
+                                                                                                                            </edmx:DataServices>
+                                                                                                                        </edmx:Edmx>
